@@ -1,0 +1,24 @@
+/* Estilos generales */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-left: 20px
+}
+
+.flex-container {
+    display: flex;
+}
+
+input {
+    text-align: end;
+}
