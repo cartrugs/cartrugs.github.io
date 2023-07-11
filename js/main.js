@@ -17,13 +17,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
     console.log(inputBuscar)
     // Evento click en el botón
     botonBuscar.addEventListener('click', () => {
-        // Variable para crear búsqueda a través de su valor, introduciendo palabra en input
+        // Variable para crear búsqueda a través del valor del input, introduciendo palabra en el elemnto
         const datosBusqueda = inputBuscar.value;
-        
-    
         // Método test para comprobar la expresión regular(true si hay coincidencia)
         if (regEx.test(datosBusqueda)) {
-            // Si true, se ejeccuta función ejecutarBusqueda
+            // Si true, se ejecuta función ejecutarBusqueda
             ejecutarBusqueda(datosBusqueda);
         } else {
             console.log('valor de la búsqueda no válido')
@@ -57,17 +55,22 @@ const ejecutarBusqueda = async (url) => {
 }
 
 // Función para mostrar los resultados de búsqueda
-const mostrarResultados = async () => {
+const mostrarResultados = () => {
     // div donde van a colocarse las tres fotos tendencias.
     const photosPrincipales = document.querySelector('#photosPrincipales')
-
+    // Array para almacenar las imágenes que obtenga de pexels
     const tendenciasArray = [];
-
-
-    
-
-    //
-
+    tendenciasArray.forEach( () => {
+        const cajasPhotos = document.createElement('DIV');
+        cajasPhotos.classList.add('caja-photo');
+        const imageTendencias = document.createElement('IMG');
+        imageTendencias.setAttribute('id', item)
+        const figCaption = document.createElement('FIGCAPTION');
+        figCaption.append(imageTendencias);
+        imageTendencias.append(cajasPhotos);
+        
+    });
+    cajasPhotos.append(fragment);
 }
 
 
