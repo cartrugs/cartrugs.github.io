@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputBuscar = document.querySelector('#inputBuscar').value;
   
    /**
+   * El div donde van a mostrase los resultados de la búsqueda..
+   * @type {object}
+   */
+  const resultadoBusqueda = document.querySelector('#resultadoBusqueda');
+
+   /**
    * El div donde van a colocarse las tres fotos tendencias.
    * @type {object}
    */
@@ -56,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Método test para comprobar la expresión regular(true si hay coincidencia)
         if (regExp.test(datosBusqueda)) {
             // Si true, se ejecuta función ejecutarBusqueda
-            mostrarResultados();
+            pintarResultados();
           } else {
             console.log('valor de la búsqueda no válido');
           }
@@ -92,28 +98,42 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Función para mostrar los resultados de búsqueda
-  const mostrarResultados = async () => {
+  const pintarResultados = async () => {
     // Array para almacenar las imágenes que obtenga de pexels
     const busquedaArray = await ejecutarBusqueda(`search?query=${inputBuscar.value}`);
-    console.log(busquedaArray);
-    busquedaArray.forEach(() => {
+    console.log(busquedaArray)
+    console.log(busquedaArray.photos.length);
+    busquedaArray.photos.forEach((photo) => {
       const cajasPhotos = document.createElement('DIV');
       cajasPhotos.classList.add('caja-photo');
-      const imageTendencias = document.createElement('IMG');
-
-      imageTendencias.setAttribute('id', item);
+      const imageBusqueda = document.createElement('IMG');
+      imageBusqueda.src = photo.src.medium
+      imageBusqueda.alt = photo.photographer
+      imageBusqueda.setAttribute('id', photo.id);
       const figCaption = document.createElement('FIGCAPTION');
-      figCaption.append(imageTendencias);
-      imageTendencias.append(cajasPhotos);
+      figCaption.append(imageBusqueda);
+      cajasPhotos.append(figCaption);
+      resultadoBusqueda.append(cajasPhotos);
     });
-    cajasPhotos.append(fragment);
+    
   };
 
-  const crearEstaticas = async () => { 
-    const tendenciasArray = await ejecutarBusqueda()
-  } 
+  // const crearEstaticas = async () => { 
+  //   const {ok, page, photos} = await ejecutarBusqueda()
+  //   tendenciasArray.forEach(Math.floor(Math.random()));
+  //   const cajasPhotosTendencias = document.createElement('DIV');
+  //     cajasPhotosTendencias.classList.add('caja-photo-tendencias');
+  //     const imageTendencias = document.createElement('IMG');
+      
+
+  //     imageTendencias.setAttribute('id', item);
+  //     const figCaption = document.createElement('FIGCAPTION');
+  //     figCaption.append(imageTendencias);
+  //     imageTendencias.append(cajasPhotos);
+
+  // } 
 
   // INVOCACIÓN FUNCIONES
-  mostrarResultados()
+  pintarResultados()
 
 }); // LOAD
