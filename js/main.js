@@ -54,11 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
    *  * @param {Event}
    * Evento click en el botón de búsqueda. Se pone a la escucha al documento y se asigna target al botón para desencadenar el evento.
    */
-  document.addEventListener('click', ({target}) => {
+  document.addEventListener('click', ({ target }) => {
 
     if (target === document.getElementById('#botonBuscar')) {
         // Variable para crear búsqueda a través del valor del input, introduciendo palabra en el elemento.
-        const datosBusqueda = inputBuscar.value;
+        // const datosBusqueda = inputBuscar.value;
         // Método test para comprobar la expresión regular(true si hay coincidencia)
         if (regExp.test(datosBusqueda)) {
             // Si true, se ejecuta función ejecutarBusqueda
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // const urlBuscar = `search?query=${inputBuscar.value}`
       // Retorna promesa. await para que continúe ejecutándose el programa. fetch para obtener recursos de forma asíncrona por la red
       let res = await fetch(`${urlBase}/${url}`, {
+        
         // No tengo muy claro si esto es así
         headers: {
           'Authorization': 'aIwCSd1ODcT15TJOIvWuLrgCFSgq5Krev7gA8CV5IhQFpAPqt7eA65LU',
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (res.ok) {
         res = await res.json();
+        
         return res;
       } else {
         throw 'Ha ocurrido un error';
@@ -100,16 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Función para mostrar los resultados de búsqueda
   const pintarResultados = async () => {
     // Array para almacenar las imágenes que obtenga de pexels
-    const busquedaArray = await ejecutarBusqueda(`search?query=${inputBuscar.value}`);
+    const busquedaArray = await ejecutarBusqueda(`search?query=${inputBuscar.value}&page=1`);
     console.log(busquedaArray)
     console.log(busquedaArray.photos.length);
-    busquedaArray.photos.forEach((photo) => {
+    busquedaArray.photos.forEach(({ alt, src }) => {
       const cajasPhotos = document.createElement('DIV');
       cajasPhotos.classList.add('caja-photo');
       const imageBusqueda = document.createElement('IMG');
-      imageBusqueda.src = photo.src.medium
-      imageBusqueda.alt = photo.photographer
-      imageBusqueda.setAttribute('id', photo.id);
+      imageBusqueda.setAttribute('src', src); // Corrección: establecer el atributo src correctamente
+      console.log(src)
+      imageBusqueda.setAttribute('alt', alt); // Corrección: establecer el atributo alt correctamente
       const figCaption = document.createElement('FIGCAPTION');
       figCaption.append(imageBusqueda);
       cajasPhotos.append(figCaption);
@@ -120,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // const crearEstaticas = async () => { 
   //   const {ok, page, photos} = await ejecutarBusqueda()
-  //   tendenciasArray.forEach(Math.floor(Math.random()));
   //   const cajasPhotosTendencias = document.createElement('DIV');
   //     cajasPhotosTendencias.classList.add('caja-photo-tendencias');
   //     const imageTendencias = document.createElement('IMG');
