@@ -14,18 +14,20 @@
     <header class="flex-container">
         <h1 class="app-name">Pexels</h1>
         <div class="flex-container busqueda">
-          <input type="search" id="inputBuscar" class="busqueda-control" placeholder="Busca por tema">
-          <button id="botonBuscar" name="botonBuscar" class="btn">Buscar</button>        
+          <form id="idFormulario" class="btn">
+            <input type="text" id="palabra" class="btn">
+            <input type="submit" class="btn">
+          </form>
         </div>
     </header>
     <main>
+        <section id="resultadoBusqueda">
+            <div class="flex-container despliegue"></div>
+        </section>
         <div id="photosPrincipales" class="flex-container">
 
         </div>
     </main>
-    <section id="resultadoBusqueda">
-        <div class="flex-container despliegue"></div>
-    </section>
     <section id="mostrarTendencias">
         <div class="flex-container despliegue"></div>
     </section>
