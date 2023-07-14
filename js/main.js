@@ -36,6 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const photosPrincipales = document.querySelector('#photosPrincipales');
 
   /**
+   * El div donde van a colocarse las tres fotos tendencias.
+   * @type {object}
+   */
+  const cajasPhotosTendencias = document.querySelector('#imageTendencias');
+
+  /**
    * Expresión regular que permite cualquier palabra o palabras con una longitud máxima de 50 caracteres.
    * @type {object}
    */
@@ -57,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /**
    *  * @param {Event}
-   * Evento click en el botón de búsqueda. Se pone a la escucha al documento y se asigna target al botón para desencadenar el evento.
+   * Evento submit en el botón de búsqueda. Se pone a la escucha al formulario y se asigna target al botón para desencadenar el evento.
    */
   formularioBuscar.addEventListener('submit', (ev) => {
     ev.preventDefault()
@@ -77,6 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  /**
+   * Evento click para desplegar desde tendencias.
+  */
+  photosPrincipales.addEventListener('click', (ev) => {
+    ev.preventDefault();
+  
+    const targetImage = ev.target;
+    if (targetImage.matches('img.despliegueImages')) {
+      desplegarTendencias(targetImage.src);
+    }
+  });
+  
 
   // FUNCIONES
 
@@ -128,32 +147,64 @@ document.addEventListener('DOMContentLoaded', () => {
       // imageBusquedaText.append(imageBusqueda);
       cajasPhotos.append(imageBusqueda);
       resultadoBusqueda.append(cajasPhotos);
+      // fragment.append(resultadoBusqueda);
+      
     });
+    
   };
 
   // Función para crear fotos estáticas.
   const crearEstaticas = async (url) => {
-    const busquedaArray = await ejecutarBusqueda('curated');
+    const busquedaArray = await ejecutarBusqueda('search?query=macro&page=1');
 
-    const fotosSeleccionadas = busquedaArray.photos.slice(0, 3);
+    const fotosSeleccionadas = busquedaArray.photos.slice(3,6);
+    const fotosUnicas = [];
 
     fotosSeleccionadas.forEach((item) => {
+
+      const existeFoto = fotosUnicas.find((foto) => foto.src.medium === item.src.medium);
+      if (!existeFoto) {
+        const cajasPhotosTendencias = document.createElement('FIGURE');
+        cajasPhotosTendencias.classList.add('caja-photo-tendencias');
+        const imageTendencias = document.createElement('IMG');
+        imageTendencias.classList.add('despliegueImages')
+        // const imageTendenciasTexto = document.createElement('P');
+        // imageBusquedaText.textContent = 'Tendencias';
+        imageTendencias.src = item.src.medium;
+        imageTendencias.setAttribute('id', item);
+        // imageTendencias.append(imageTendenciasTexto)
+        cajasPhotosTendencias.append(imageTendencias);
+
+        photosPrincipales.append(cajasPhotosTendencias)
+
+        fotosUnicas.push(item);
+        console.log(fotosUnicas)
+      }
+      
+
+    });
+  };
+
+  // Función para crear despliegue.
+
+  const desplegarTendencias = async (url) => {
+    const busquedaArray = await ejecutarBusqueda('search?query=macro&page=1');
+    
+    busquedaArray.photos.forEach((item) => {
       const cajasPhotosTendencias = document.createElement('FIGURE');
       cajasPhotosTendencias.classList.add('caja-photo-tendencias');
       const imageTendencias = document.createElement('IMG');
-      // const imageTendenciasTexto = document.createElement('P');
-      // imageBusquedaText.textContent = 'Tendencias';
       imageTendencias.src = item.src.medium;
-      imageTendencias.setAttribute('id', item);
-      // imageTendencias.append(imageTendenciasTexto)
-      cajasPhotosTendencias.append(imageTendencias);
+      imageTendencias.setAttribute('id', item.id);
+      cajasPhotosTendencias.appendChild(imageTendencias);
 
-      photosPrincipales.append(cajasPhotosTendencias)
+      imageContainerTendencias.append(cajasPhotosTendencias);
 
     });
   };
 
   // INVOCACIÓN FUNCIONES
   crearEstaticas()
+  
 
 }); // LOAD
