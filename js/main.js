@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     const targetImage = ev.target;
     if (targetImage.matches('img.despliegueImages')) {
+      const imageId = targetImage.id;
       desplegarTendencias(targetImage.src);
     }
   });
@@ -153,12 +154,26 @@ document.addEventListener('DOMContentLoaded', () => {
     
   };
 
-  // Función para crear fotos estáticas.
-  const crearEstaticas = async (url) => {
-    const busquedaArray = await ejecutarBusqueda('search?query=macro&page=1');
+  const tendenciaUno = 'search?query=macro&page=1';
+  const tendenciaDos = 'search?query=milkyway&page=1';
+  const tendenciaTres = 'search?query=bees&page=1';
 
-    const fotosSeleccionadas = busquedaArray.photos.slice(3,6);
+
+  // Función para crear fotos estáticas.
+  const crearEstaticas = async (url1, url2, url3) => {
+    const busquedaArray1 = await ejecutarBusqueda('search?query=macro&page=1');
+    const busquedaArray2 = await ejecutarBusqueda('search?query=milkyway&page=1');
+    const busquedaArray3 = await ejecutarBusqueda('search?query=bees&page=1');
+
+
+    // const fotosSeleccionadas = busquedaArray.photos.slice(3,6);
     const fotosUnicas = [];
+
+    const fotosSeleccionadas = [ 
+      ...busquedaArray1.photos.slice(3, 4),
+      ...busquedaArray2.photos.slice(1, 2),
+      ...busquedaArray3.photos.slice(3, 4)
+    ];
 
     fotosSeleccionadas.forEach((item) => {
 
@@ -171,7 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // const imageTendenciasTexto = document.createElement('P');
         // imageBusquedaText.textContent = 'Tendencias';
         imageTendencias.src = item.src.medium;
+        
         imageTendencias.setAttribute('id', item);
+        console.log(item)
         // imageTendencias.append(imageTendenciasTexto)
         cajasPhotosTendencias.append(imageTendencias);
 
@@ -188,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Función para crear despliegue.
 
   const desplegarTendencias = async (url) => {
-    const busquedaArray = await ejecutarBusqueda('search?query=macro&page=1');
+    const busquedaArray = await ejecutarBusqueda('curated');
     
     busquedaArray.photos.forEach((item) => {
       const cajasPhotosTendencias = document.createElement('FIGURE');
@@ -204,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // INVOCACIÓN FUNCIONES
-  crearEstaticas()
+  crearEstaticas(tendenciaUno, tendenciaDos, tendenciaTres)
   
 
 }); // LOAD
