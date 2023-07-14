@@ -18,6 +18,11 @@ header {
   background-color: #f7d309;
 }
 
+main {
+  background-color: #383734;
+  padding: 5px;
+}
+
 img {
   width: 100%;
 }
@@ -79,7 +84,6 @@ img {
   display: inline-block;
 }
 
-
 #resultadoBusqueda {
   display: flex;
   flex-wrap: wrap;
@@ -95,4 +99,45 @@ img {
   width: 100%;
   height: 200px; 
   object-fit: cover;
+}
+
+/* #photosPrincipales {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+#photosPrincipales .caja-photo-tendencias {
+  flex-basis: calc(33.33% - 10px);
+  margin-bottom: 10px;
+}
+
+#photosPrincipales .caja-photo-tendencias img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+} */
+
+#photosPrincipales {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 10px 60px 10px;
+}
+
+#photosPrincipales .caja-photo-tendencias {
+  width: calc(33.33% - 10px);
+  margin-bottom: 10px;
+}
+
+#photosPrincipales .caja-photo-tendencias img {
+  width: 100%;
+  height: 250px; /* Aumenta la altura para hacerlo un poco más grande */
+  object-fit: cover;
+}
+
+figure.caja-photo-tendencias {
+  background-color: rgb(255, 255, 255);
+  padding: 5px 3px 50px;
+  box-shadow: px 5px 5px #f7d30991;
+  border-radius: 5px ;
 }

@@ -1,14 +1,14 @@
 /**
  * Se ejecuta cuando el contenido del DOM ha sido cargado.
  */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   // VARIABLES
 
   /**
    *  Botón que al clicar inicia la búsqueda (tipo objeto del DOM).
    * @type {object}
    */
-  const botonBuscar = document.querySelector("#botonBuscar");
+  const botonBuscar = document.querySelector('#botonBuscar');
 
   /**
    *  Elemento input de entrada de búsqueda (tipo objeto del DOM). Se agrega al final .value Ejemplo(entre^^): ^querySelector().value^ para capturar el valor del input (palabra con que el usuario genera la búsqueda) y se asigna ese valor como argumemnto a la función encargada de arrojar los resultados.
@@ -20,20 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
    * El formulario para buscar resultados.
    * @type {object}
    */
-  const formularioBuscar = document.querySelector("#idFormulario");
+  const formularioBuscar = document.querySelector('#idFormulario');
 
 
   /**
    * El div donde van a mostrase los resultados de la búsqueda.
    * @type {object}
    */
-  const resultadoBusqueda = document.querySelector("#resultadoBusqueda");
+  const resultadoBusqueda = document.querySelector('#resultadoBusqueda');
 
   /**
    * El div donde van a colocarse las tres fotos tendencias.
    * @type {object}
    */
-  const photosPrincipales = document.querySelector("#photosPrincipales");
+  const photosPrincipales = document.querySelector('#photosPrincipales');
 
   /**
    * Expresión regular que permite cualquier palabra o palabras con una longitud máxima de 50 caracteres.
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * La URL base para la API de Pexels.
    * @type {string}
    */
-  const urlBase = "https://api.pexels.com/v1";
+  const urlBase = 'https://api.pexels.com/v1';
 
   // EVENTOS
 
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
    *  * @param {Event}
    * Evento click en el botón de búsqueda. Se pone a la escucha al documento y se asigna target al botón para desencadenar el evento.
    */
-  formularioBuscar.addEventListener("submit", (ev) => {
+  formularioBuscar.addEventListener('submit', (ev) => {
     ev.preventDefault()
 
     console.log(ev);
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Si true, se ejecuta función ejecutarBusqueda
         pintarResultados(palabraUsuario);
       } else {
-        window.alert("La palabra para la búsqueda no es válida. Por favor introduce una nueva palabra");
+        window.alert('La palabra para la búsqueda no es válida. Por favor introduce una nueva palabra');
       }
     }
   });
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // No tengo muy claro si esto es así
         headers: {
           Authorization:
-            "aIwCSd1ODcT15TJOIvWuLrgCFSgq5Krev7gA8CV5IhQFpAPqt7eA65LU",
+            'aIwCSd1ODcT15TJOIvWuLrgCFSgq5Krev7gA8CV5IhQFpAPqt7eA65LU',
         },
       });
 
@@ -98,48 +98,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return res;
       } else {
-        throw "Ha ocurrido un error";
+        throw 'Ha ocurrido un error';
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const urlDinamica = "https://api.pexels.com/v1/search?query=red&per_page=1"
+  const urlDinamica = 'https://api.pexels.com/v1/search?query=red&per_page=1'
 
   // Función para mostrar los resultados de búsqueda
   const pintarResultados = async (url) => {
-    // Array para almacenar las imágenes que obtenga de pexels
     
+    // Array para almacenar las imágenes que obtenga de pexels.
     const busquedaArray = await ejecutarBusqueda(`search?query=${url}`);
     console.log(busquedaArray);
     busquedaArray.photos.forEach((item) => {
       // console.log(item);
-      const cajasPhotos = document.createElement("FIGURE");
-      cajasPhotos.classList.add("caja-photo");
-      const imageBusqueda = document.createElement("IMG");
-      (imageBusqueda.src = item.src.medium),
-        imageBusqueda.setAttribute("alt", item.alt);
-      const figCaption = document.createElement("FIGCAPTION");
-      figCaption.append(imageBusqueda);
-      cajasPhotos.append(figCaption);
+      const cajasPhotos = document.createElement('FIGURE');
+      cajasPhotos.classList.add('caja-photo');
+      const imageBusqueda = document.createElement('IMG');
+      imageBusqueda.src = item.src.medium,
+      imageBusqueda.setAttribute('alt', item.alt);
+      const imageBusquedaText = document.createElement('P')
+        // imageBusqueda.classList.add('img-photographer');
+        // imageBusquedaText.textContent = item.photographer;
+      // const figCaption = document.createElement('FIGCAPTION');
+      // figCaption.append(imageBusqueda);
+      // imageBusquedaText.append(imageBusqueda);
+      cajasPhotos.append(imageBusqueda);
       resultadoBusqueda.append(cajasPhotos);
     });
   };
 
-  // const crearEstaticas = async () => {
-  //   const {ok, page, photos} = await ejecutarBusqueda()
-  //   const cajasPhotosTendencias = document.createElement('DIV');
-  //     cajasPhotosTendencias.classList.add('caja-photo-tendencias');
-  //     const imageTendencias = document.createElement('IMG');
+  // Función para crear fotos estáticas.
+  const crearEstaticas = async (url) => {
+    const busquedaArray = await ejecutarBusqueda('curated');
 
-  //     imageTendencias.setAttribute('id', item);
-  //     const figCaption = document.createElement('FIGCAPTION');
-  //     figCaption.append(imageTendencias);
-  //     imageTendencias.append(cajasPhotos);
+    const fotosSeleccionadas = busquedaArray.photos.slice(0, 3);
 
-  // }
+    fotosSeleccionadas.forEach((item) => {
+      const cajasPhotosTendencias = document.createElement('FIGURE');
+      cajasPhotosTendencias.classList.add('caja-photo-tendencias');
+      const imageTendencias = document.createElement('IMG');
+      // const imageTendenciasTexto = document.createElement('P');
+      // imageBusquedaText.textContent = 'Tendencias';
+      imageTendencias.src = item.src.medium;
+      imageTendencias.setAttribute('id', item);
+      // imageTendencias.append(imageTendenciasTexto)
+      cajasPhotosTendencias.append(imageTendencias);
+
+      photosPrincipales.append(cajasPhotosTendencias)
+
+    });
+  };
 
   // INVOCACIÓN FUNCIONES
+  crearEstaticas()
 
 }); // LOAD
