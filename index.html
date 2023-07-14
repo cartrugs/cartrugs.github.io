@@ -7,20 +7,26 @@
     <title>Práctica API Pexels</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <header class="flex-container">
-        <h1 class="app-name">Pexels</h1>
-        <div class="flex-container busqueda">
-          <form id="idFormulario" class="btn">
-            <input type="text" id="palabra" class="btn">
-            <input type="submit" class="btn">
+        <div class="logo">
+            <img src="assets/1829371.png" alt="Logo">
+          </div>
+          <p class="app-name">picsApp</p>
+          <p class="app-nav">inicia seción</p>
+          <p class="app-nav">regístrate</p>  
+          <p class="app-nav">comparte</p>    
+        <div class="busqueda">
+          <form id="idFormulario" class="formSearch">
+            <input type="text" id="palabra" placeholder="Introduce palabra">
+            <input type="submit" class="btn-submit" value="Buscar ">
           </form>
         </div>
     </header>
-    <main>
+    <main class="row">
         <section id="resultadoBusqueda">
             <div class="flex-container despliegue"></div>
         </section>

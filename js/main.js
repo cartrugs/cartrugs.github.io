@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ev.preventDefault()
 
     console.log(ev);
-    if (ev.target.className == 'btn') {
+    if (ev.target.className == 'formSearch') {
 
       const palabraUsuario = document.getElementById('palabra').value
   
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Si true, se ejecuta función ejecutarBusqueda
         pintarResultados(palabraUsuario);
       } else {
-        console.log("valor de la búsqueda no válido");
+        window.alert("La palabra para la búsqueda no es válida. Por favor introduce una nueva palabra");
       }
     }
   });
