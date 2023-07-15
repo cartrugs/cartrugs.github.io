@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       desplegarTendencias(targetImage.src);
     }
   });
+  ;
   
 
   // FUNCIONES
@@ -188,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         imageTendencias.src = item.src.medium;
         
         imageTendencias.setAttribute('id', item);
-        console.log(item)
+        // console.log(item)
         // imageTendencias.append(imageTendenciasTexto)
         cajasPhotosTendencias.append(imageTendencias);
 
@@ -204,24 +205,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Función para crear despliegue.
 
-  const desplegarTendencias = async (url) => {
-    const busquedaArray = await ejecutarBusqueda('curated');
+  const desplegarTendencias = async (url1, url2, url3) => {
+    console.log(url1, url2, url3)
+    const busquedaArray1 = await ejecutarBusqueda('search?query=macro&page=1');
     
-    busquedaArray.photos.forEach((item) => {
+    const busquedaArray2 = await ejecutarBusqueda('search?query=milkyway&page=1');
+    const busquedaArray3 = await ejecutarBusqueda('search?query=bees&page=1');
+    const urls = ['search?query=macro&page=1', 'search?query=milkyway&page=1', 'search?query=bees&page=1'];
+    
+    const fotos = [
+      ...busquedaArray1.photos,
+      ...busquedaArray2.photos,
+      ...busquedaArray3.photos
+    ];
+    console.log(fotos)
+  
+    fotos.forEach((item, index) => {
       const cajasPhotosTendencias = document.createElement('FIGURE');
       cajasPhotosTendencias.classList.add('caja-photo-tendencias');
       const imageTendencias = document.createElement('IMG');
       imageTendencias.src = item.src.medium;
-      imageTendencias.setAttribute('id', item.id);
       cajasPhotosTendencias.appendChild(imageTendencias);
-
+  
       imageContainerTendencias.append(cajasPhotosTendencias);
-
     });
   };
+  
+  
 
   // INVOCACIÓN FUNCIONES
   crearEstaticas(tendenciaUno, tendenciaDos, tendenciaTres)
+  
   
 
 }); // LOAD

@@ -140,3 +140,20 @@ figure.caja-photo-tendencias {
   padding: 5px 3px 50px;
   border-radius: 5px ;
 }
+
+#imageContainerTendencias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#imageContainerTendencias .caja-photo-tendencias {
+  width: calc(33.33% - 10px);
+  margin-bottom: 10px;
+}
+
+#imageContainerTendencias .caja-photo-tendencias img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
