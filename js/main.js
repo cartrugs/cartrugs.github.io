@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const cajasPhotosTendencias = document.querySelector('#imageTendencias');
 
+  const filtroPosicion = document.querySelector('#filtroPosicion');
+
+
   /**
    * Expresión regular que permite cualquier palabra o palabras con una longitud máxima de 50 caracteres.
    * @type {object}
@@ -97,6 +100,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   ;
+
+  /**
+   * Evento change para mostrar resultados del filtro.
+  */
+
+  filtroPosicion.addEventListener('change', (ev) => {
+    const filtroSeleccionado = ev.target.value;
+    if (filtroSeleccionado === 'horizontal') {
+      // Filtrar por posición horizontal
+      pintarHorizontales();
+    } else if (filtroSeleccionado === 'vertical') {
+      // Filtrar por posición vertical
+      pintarVerticales();
+    }
+  });
+  
   
 
   // FUNCIONES
@@ -104,10 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Función para llevar a cabo la búsqueda
   const ejecutarBusqueda = async (url) => {
     try {
-      // const urlBuscar = `search?query=${inputBuscar.value}`
       // Retorna promesa. await para que continúe ejecutándose el programa. fetch para obtener recursos de forma asíncrona por la red
       let res = await fetch(`${urlBase}/${url}`, {
-        // No tengo muy claro si esto es así
         headers: {
           Authorization:
             'aIwCSd1ODcT15TJOIvWuLrgCFSgq5Krev7gA8CV5IhQFpAPqt7eA65LU',
@@ -126,8 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const urlDinamica = 'https://api.pexels.com/v1/search?query=red&per_page=1'
-
   // Función para mostrar los resultados de búsqueda
   const pintarResultados = async (url) => {
     
@@ -141,13 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const imageBusqueda = document.createElement('IMG');
       imageBusqueda.src = item.src.medium,
       imageBusqueda.setAttribute('alt', item.alt);
-      const imageBusquedaText = document.createElement('P')
-        // imageBusqueda.classList.add('img-photographer');
-        // imageBusquedaText.textContent = item.photographer;
-      // const figCaption = document.createElement('FIGCAPTION');
-      // figCaption.append(imageBusqueda);
-      // imageBusquedaText.append(imageBusqueda);
-      cajasPhotos.append(imageBusqueda);
+      const photographer = document.createElement('P'); 
+      photographer.textContent = item.photographer
+      cajasPhotos.append(imageBusqueda, photographer);
       resultadoBusqueda.append(cajasPhotos);
       // fragment.append(resultadoBusqueda);
       
@@ -225,12 +236,45 @@ document.addEventListener('DOMContentLoaded', () => {
       cajasPhotosTendencias.classList.add('caja-photo-tendencias');
       const imageTendencias = document.createElement('IMG');
       imageTendencias.src = item.src.medium;
-      cajasPhotosTendencias.appendChild(imageTendencias);
+      const photographer = document.createElement('P'); 
+      photographer.textContent = item.photographer
+      cajasPhotosTendencias.append(imageTendencias), photographer;
   
       imageContainerTendencias.append(cajasPhotosTendencias);
     });
   };
   
+  // Función para pintar horizontales
+
+  const pintarHorizontales = async (url) => {
+    const busquedaArray = await ejecutarBusqueda(`search?query=${url}`);
+    const imagenesHorizontales = busquedaArray.photos.filter(item => item.width > item.heigth)
+
+    imagenesHorizontales.forEach((item) => {
+      const cajasPhotos = document.createElement('FIGURE');
+      cajasPhotos.classList.add('caja-photo');
+      const imageBusqueda = document.createElement('IMG');
+      imageBusqueda.src = item.src.medium;
+      imageBusqueda.alt= item.alt;
+      cajasPhotos.append(imageBusqueda);
+      resultadoBusqueda.append(cajasPhotos) 
+    });
+  };
+
+  // Función para pintar verticales
+
+  const pintarVerticales = async (url) => {
+    const busquedaArray =  await ejecutarBusqueda(`search?query=${url}`);
+    const imagenesVerticales = busquedaArray.photos.filter(item => item.width < item.heigth)
+
+    imagenesVerticales.forEach((item) => {
+      const cajasPhotos = document.createElement('FIGURE');
+      cajasPhotos.classList.add('caja-photo');
+      const imageBusqueda = document.createElement('IMG');
+      imageBusqueda.src = item.src.medium;
+      imageBusqueda.src = item.alt; 
+    })
+  }
   
 
   // INVOCACIÓN FUNCIONES
