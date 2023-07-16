@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
   // INVOCACIÓN FUNCIONES
-  crearEstaticas(tendenciaUno, tendenciaDos, tendenciaTres)
+  crearEstaticas(tendenciaUno, tendenciaDos, tendenciaTres);
   
   
 
