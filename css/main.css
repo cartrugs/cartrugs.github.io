@@ -44,14 +44,14 @@ img {
   font-weight: bolder;
   align-self: flex-start;
   margin-left: 10px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .app-nav {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   align-items: center;
-  margin-left: 30px; 
+  margin-left: 30px;
 }
 
 .busqueda {
@@ -64,7 +64,7 @@ img {
   padding: 5px;
   border: 1px solid #bd450e;
   border-radius: 15px 0 0 15px;
-  width: 150px; 
+  width: 150px;
 }
 
 .btn-submit {
@@ -76,7 +76,7 @@ img {
   border: 1px solid #bd450e;
   border-radius: 0 15px 15px 0;
   width: 80px;
-  margin-left: -4px; 
+  margin-left: -4px;
 }
 
 .btn-submit::before {
@@ -97,26 +97,33 @@ img {
 
 .caja-photo img {
   width: 100%;
-  height: 200px; 
-  object-fit: cover;
-}
-
-/* #photosPrincipales {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-#photosPrincipales .caja-photo-tendencias {
-  flex-basis: calc(33.33% - 10px);
-  margin-bottom: 10px;
-}
-
-#photosPrincipales .caja-photo-tendencias img {
-  width: 100%;
   height: 200px;
   object-fit: cover;
-} */
+}
+
+ /* Estilos para el select */
+select {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #fff;
+  width: 40%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+select option[hidden] {
+  display: block;
+  color: gray;
+}
+
+select option {
+  padding: 5px;
+}
 
 #photosPrincipales {
   display: flex;
@@ -131,14 +138,14 @@ img {
 
 #photosPrincipales .caja-photo-tendencias img {
   width: 100%;
-  height: 250px; /* Aumenta la altura para hacerlo un poco más grande */
+  height: 250px;
   object-fit: cover;
 }
 
 figure.caja-photo-tendencias {
   background-color: rgb(255, 255, 255);
   padding: 5px 3px 50px;
-  border-radius: 5px ;
+  border-radius: 5px;
 }
 
 #imageContainerTendencias {
@@ -156,4 +163,79 @@ figure.caja-photo-tendencias {
   width: 100%;
   height: 200px;
   object-fit: cover;
+}
+
+/* Media queries */
+
+@media screen and (min-width: 601px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .app-name {
+    text-align: center;
+    margin: 10px;
+    align-self: center;
+  }
+
+  .app-nav {
+    justify-content: center;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .busqueda {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  #photosPrincipales {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  #photosPrincipales .caja-photo-tendencias {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 922px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .logo {
+    margin-bottom: 0;
+  }
+
+  .app-nav {
+    margin-left: 30px;
+    margin-top: 0;
+  }
+
+  .busqueda {
+    margin-left: auto;
+    margin-top: 0;
+  }
+
+  #photosPrincipales {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  #photosPrincipales .caja-photo-tendencias {
+    width: calc(33.33% - 10px);
+    margin-bottom: 10px;
+  }
+
+  #photosPrincipales .caja-photo-tendencias:nth-child(3n) {
+    margin-right: 0;
+  }
 }

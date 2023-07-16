@@ -107,9 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   filtroPosicion.addEventListener('change', (ev) => {
     const filtroSeleccionado = ev.target.value;
+    const imageFiltrada = ev.target;
     if (filtroSeleccionado === 'horizontal') {
       // Filtrar por posición horizontal
-      pintarHorizontales();
+      pintarHorizontales(imageFiltrada.width);
     } else if (filtroSeleccionado === 'vertical') {
       // Filtrar por posición vertical
       pintarVerticales();
@@ -157,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
       imageBusqueda.src = item.src.medium,
       imageBusqueda.setAttribute('alt', item.alt);
       const photographer = document.createElement('P'); 
-      photographer.textContent = item.photographer
+      // photographer.textContent = item.photographer;
+      // photographer.classList.add('parrafoPhotographer texto')
       cajasPhotos.append(imageBusqueda, photographer);
       resultadoBusqueda.append(cajasPhotos);
       // fragment.append(resultadoBusqueda);
@@ -195,15 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
         cajasPhotosTendencias.classList.add('caja-photo-tendencias');
         const imageTendencias = document.createElement('IMG');
         imageTendencias.classList.add('despliegueImages')
-        // const imageTendenciasTexto = document.createElement('P');
-        // imageBusquedaText.textContent = 'Tendencias';
         imageTendencias.src = item.src.medium;
-        
         imageTendencias.setAttribute('id', item);
-        // console.log(item)
-        // imageTendencias.append(imageTendenciasTexto)
         cajasPhotosTendencias.append(imageTendencias);
-
         photosPrincipales.append(cajasPhotosTendencias)
 
         fotosUnicas.push(item);
@@ -238,7 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
       imageTendencias.src = item.src.medium;
       const photographer = document.createElement('P'); 
       photographer.textContent = item.photographer
-      cajasPhotosTendencias.append(imageTendencias), photographer;
+      // photographer.classList.add('parrafoPhotographer texto')
+      cajasPhotosTendencias.append(imageTendencias, photographer);
   
       imageContainerTendencias.append(cajasPhotosTendencias);
     });
@@ -256,8 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const imageBusqueda = document.createElement('IMG');
       imageBusqueda.src = item.src.medium;
       imageBusqueda.alt= item.alt;
+      imageBusqueda.width = item.width;
+      imageBusqueda.height = item.height;
       cajasPhotos.append(imageBusqueda);
-      resultadoBusqueda.append(cajasPhotos) 
+      photosPrincipales.append(cajasPhotos);
     });
   };
 
@@ -272,9 +271,13 @@ document.addEventListener('DOMContentLoaded', () => {
       cajasPhotos.classList.add('caja-photo');
       const imageBusqueda = document.createElement('IMG');
       imageBusqueda.src = item.src.medium;
-      imageBusqueda.src = item.alt; 
-    })
-  }
+      imageBusqueda.src = item.alt;
+      imageBusqueda.width = item.width;
+      imageBusqueda.height = item.height;
+      cajasPhotos.append(imageBusqueda);
+      resultadoBusqueda.append(cajasPhotos); 
+    });
+  };
   
 
   // INVOCACIÓN FUNCIONES
