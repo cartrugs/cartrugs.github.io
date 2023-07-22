@@ -1,4 +1,5 @@
 /* Estilos generales */
+
 * {
   margin: 0;
   padding: 0;
@@ -9,22 +10,18 @@ body {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-/* Encabezado */
+img {
+  width: 100%;
+}
+
+/* header, nav, logo*/
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
   background-color: #f7d309;
-}
-
-main {
-  background-color: #383734;
-  padding: 5px;
-}
-
-img {
-  width: 100%;
 }
 
 .logo {
@@ -35,7 +32,6 @@ img {
 }
 
 .logo img {
-  width: 100%;
   height: auto;
 }
 
@@ -54,6 +50,8 @@ img {
   margin-left: 30px;
 }
 
+/* Busqueda inputs */
+
 .busqueda {
   display: flex;
   align-items: center;
@@ -65,6 +63,7 @@ img {
   border: 1px solid #bd450e;
   border-radius: 15px 0 0 15px;
   width: 150px;
+  text-align: center;
 }
 
 .btn-submit {
@@ -84,46 +83,14 @@ img {
   display: inline-block;
 }
 
-#resultadoBusqueda {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+/* main */
 
-.caja-photo {
-  width: calc(33.33% - 10px);
-  margin: 10px auto;
-}
-
-.caja-photo img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
- /* Estilos para el select */
-select {
-  padding: 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  appearance: none;
-  background-color: #fff;
-  width: 40%;
-  margin: 0 auto;
-  display: block;
-  margin-top: 10px;
-  text-align: center;
-}
-
-select option[hidden] {
-  display: block;
-  color: gray;
-}
-
-select option {
+main {
+  background-color: #383734;
   padding: 5px;
 }
+
+/* Imágenes section tendencias-estáticas (photosPrincipales)*/
 
 #photosPrincipales {
   display: flex;
@@ -147,6 +114,52 @@ figure.caja-photo-tendencias {
   padding: 5px 3px 50px;
   border-radius: 5px;
 }
+
+/* Imágenes section resultadoBusqueda (evento 'submit')*/
+
+#resultadoBusqueda {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; 
+}
+
+/* Imágenes pintar horizontales */
+
+ /* Estilos para el select */
+ select {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #fff;
+  width: 40%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+select option[hidden] {
+  display: block;
+  color: gray;
+}
+
+select option {
+  padding: 5px;
+}
+
+.caja-photo {
+  width: calc(33.33% - 10px);
+  margin: 10px auto;
+}
+
+.caja-photo img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Imágenes para el despliegue de tendencias (evento 'click') */
 
 #imageContainerTendencias {
   display: flex;

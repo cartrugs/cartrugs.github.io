@@ -90,16 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Evento click para desplegar desde tendencias.
   */
-  photosPrincipales.addEventListener('click', (ev) => {
-    ev.preventDefault();
-  
-    const targetImage = ev.target;
+  photosPrincipales.addEventListener('click', ({target}) => {
+
     if (targetImage.matches('img.despliegueImages')) {
       const imageId = targetImage.id;
       desplegarTendencias(targetImage.src);
     }
   });
-  ;
+
 
   /**
    * Evento change para mostrar resultados del filtro.
@@ -118,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   
+
 
   // FUNCIONES
 
@@ -143,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(error);
     }
   };
-
+  
   // Función para mostrar los resultados de búsqueda
   const pintarResultados = async (url) => {
     
@@ -172,62 +171,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const tendenciaDos = 'search?query=milkyway&page=1';
   const tendenciaTres = 'search?query=bees&page=1';
 
-
   // Función para crear fotos estáticas.
-  const crearEstaticas = async (url1, url2, url3) => {
-    const busquedaArray1 = await ejecutarBusqueda('search?query=macro&page=1');
-    const busquedaArray2 = await ejecutarBusqueda('search?query=milkyway&page=1');
-    const busquedaArray3 = await ejecutarBusqueda('search?query=bees&page=1');
+  const crearEstaticas = async (url1, url2, url3) => {   
+    const busquedaArray1 = await ejecutarBusqueda('photos/268819');
+    const busquedaArray2 = await ejecutarBusqueda('photos/1906658');
+    const busquedaArray3 = await ejecutarBusqueda('photos/2047420');
 
-
-    // const fotosSeleccionadas = busquedaArray.photos.slice(3,6);
-    const fotosUnicas = [];
-
-    const fotosSeleccionadas = [ 
-      ...busquedaArray1.photos.slice(3, 4),
-      ...busquedaArray2.photos.slice(1, 2),
-      ...busquedaArray3.photos.slice(3, 4)
+    const fotosSeleccionadas = [
+      {
+        item: busquedaArray1,
+        categoria: 'macro'
+      },{
+        item: busquedaArray2,
+        categoria: 'milkyway'
+      },{
+        item: busquedaArray3,
+        categoria: 'bees'
+      }
     ];
 
-    fotosSeleccionadas.forEach((item) => {
+    console.log({busquedaArray1});
 
-      const existeFoto = fotosUnicas.find((foto) => foto.src.medium === item.src.medium);
-      if (!existeFoto) {
-        const cajasPhotosTendencias = document.createElement('FIGURE');
-        cajasPhotosTendencias.classList.add('caja-photo-tendencias');
-        const imageTendencias = document.createElement('IMG');
-        imageTendencias.classList.add('despliegueImages')
-        imageTendencias.src = item.src.medium;
-        imageTendencias.setAttribute('id', item);
-        cajasPhotosTendencias.append(imageTendencias);
-        photosPrincipales.append(cajasPhotosTendencias)
+    fotosSeleccionadas.forEach(({item, categoria}) => {
 
-        fotosUnicas.push(item);
-        console.log(fotosUnicas)
-      }
-      
+      const cajasPhotosTendencias = document.createElement('FIGURE');
+      cajasPhotosTendencias.classList.add('caja-photo-tendencias');
+      const imageTendencias = document.createElement('IMG');
+      imageTendencias.classList.add('despliegueImages')
+      imageTendencias.src = item.src.medium;
+      imageTendencias.setAttribute('id', item);
+      cajasPhotosTendencias.append(imageTendencias);
+      photosPrincipales.append(cajasPhotosTendencias) 
 
     });
   };
 
   // Función para crear despliegue.
 
-  const desplegarTendencias = async (url1, url2, url3) => {
-    console.log(url1, url2, url3)
-    const busquedaArray1 = await ejecutarBusqueda('search?query=macro&page=1');
-    
-    const busquedaArray2 = await ejecutarBusqueda('search?query=milkyway&page=1');
-    const busquedaArray3 = await ejecutarBusqueda('search?query=bees&page=1');
-    const urls = ['search?query=macro&page=1', 'search?query=milkyway&page=1', 'search?query=bees&page=1'];
-    
-    const fotos = [
-      ...busquedaArray1.photos,
-      ...busquedaArray2.photos,
-      ...busquedaArray3.photos
-    ];
-    console.log(fotos)
+  const desplegarTendencias = async (id) => {
+    console.log(id, 'en desplegar tendencias')
+    const busquedaArray1 = await ejecutarBusqueda(`search?query=${id}&page=1`);
+
+    imageContainerTendencias,innerHTML = '';
   
-    fotos.forEach((item, index) => {
+    photos.forEach((item, index) => {
       const cajasPhotosTendencias = document.createElement('FIGURE');
       cajasPhotosTendencias.classList.add('caja-photo-tendencias');
       const imageTendencias = document.createElement('IMG');
@@ -243,41 +230,41 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Función para pintar horizontales
 
-  const pintarHorizontales = async (url) => {
-    const busquedaArray = await ejecutarBusqueda(`search?query=${url}`);
-    const imagenesHorizontales = busquedaArray.photos.filter(item => item.width > item.heigth)
+  // const pintarHorizontales = async (url) => {
+  //   const busquedaArray = await ejecutarBusqueda(`search?query=${url}`);
+  //   const imagenesHorizontales = busquedaArray.photos.filter(item => item.width > item.heigth)
 
-    imagenesHorizontales.forEach((item) => {
-      const cajasPhotos = document.createElement('FIGURE');
-      cajasPhotos.classList.add('caja-photo');
-      const imageBusqueda = document.createElement('IMG');
-      imageBusqueda.src = item.src.medium;
-      imageBusqueda.alt= item.alt;
-      imageBusqueda.width = item.width;
-      imageBusqueda.height = item.height;
-      cajasPhotos.append(imageBusqueda);
-      photosPrincipales.append(cajasPhotos);
-    });
-  };
+  //   imagenesHorizontales.forEach((item) => {
+  //     const cajasPhotos = document.createElement('FIGURE');
+  //     cajasPhotos.classList.add('caja-photo');
+  //     const imageBusqueda = document.createElement('IMG');
+  //     imageBusqueda.src = item.src.medium;
+  //     imageBusqueda.alt= item.alt;
+  //     imageBusqueda.width = item.width;
+  //     imageBusqueda.height = item.height;
+  //     cajasPhotos.append(imageBusqueda);
+  //     photosPrincipales.append(cajasPhotos);
+  //   });
+  // };
 
   // Función para pintar verticales
 
-  const pintarVerticales = async (url) => {
-    const busquedaArray =  await ejecutarBusqueda(`search?query=${url}`);
-    const imagenesVerticales = busquedaArray.photos.filter(item => item.width < item.heigth)
+  // const pintarVerticales = async (url) => {
+  //   const busquedaArray =  await ejecutarBusqueda(`search?query=${url}`);
+  //   const imagenesVerticales = busquedaArray.photos.filter(item => item.width < item.heigth)
 
-    imagenesVerticales.forEach((item) => {
-      const cajasPhotos = document.createElement('FIGURE');
-      cajasPhotos.classList.add('caja-photo');
-      const imageBusqueda = document.createElement('IMG');
-      imageBusqueda.src = item.src.medium;
-      imageBusqueda.src = item.alt;
-      imageBusqueda.width = item.width;
-      imageBusqueda.height = item.height;
-      cajasPhotos.append(imageBusqueda);
-      resultadoBusqueda.append(cajasPhotos); 
-    });
-  };
+  //   imagenesVerticales.forEach((item) => {
+  //     const cajasPhotos = document.createElement('FIGURE');
+  //     cajasPhotos.classList.add('caja-photo');
+  //     const imageBusqueda = document.createElement('IMG');
+  //     imageBusqueda.src = item.src.medium;
+  //     imageBusqueda.src = item.alt;
+  //     imageBusqueda.width = item.width;
+  //     imageBusqueda.height = item.height;
+  //     cajasPhotos.append(imageBusqueda);
+  //     resultadoBusqueda.append(cajasPhotos); 
+  //   });
+  // };
   
 
   // INVOCACIÓN FUNCIONES
